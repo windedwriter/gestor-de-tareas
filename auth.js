@@ -1,6 +1,6 @@
-/**
- * Sistema centralizado de autenticación
- */
+// Configuración
+const API_URL = 'https://tu-dominio-infinityfree.com/auth.php';
+
 const AUTH = {
     /**
      * Verifica si el usuario está autenticado
@@ -12,17 +12,17 @@ const AUTH = {
     /**
      * Cierra la sesión del usuario
      */
-  logout() {
-    sessionStorage.clear();
-    window.location.replace('https://windedwriter.github.io/gestor-de-tareas/login.html');
-},
+    logout() {
+        sessionStorage.clear();
+        window.location.href = 'login.html';
+    },
 
     /**
      * Realiza el proceso de login
      */
     async login(email, password) {
         try {
-            const response = await fetch('auth.php', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -37,10 +37,7 @@ const AUTH = {
             const data = await response.json();
             if (data.success) {
                 sessionStorage.setItem('userId', data.user.id);
-                return { 
-                    success: true,
-                    message: 'Login exitoso'
-                };
+                return { success: true, message: 'Login exitoso' };
             } else {
                 return {
                     success: false,
@@ -59,20 +56,51 @@ const AUTH = {
     /**
      * Verifica la autenticación y redirige según corresponda
      */
-checkAuth() {
-    const currentPath = window.location.pathname;
-    const isLoginPage = currentPath.includes('login.html');
-    const isGestorPage = currentPath.includes('gestor_tareas.html');
-    
-    if (isLoginPage && this.isAuthenticated()) {
-        window.location.replace('https://windedwriter.github.io/gestor-de-tareas/gestor_tareas.html');
-    } else if (isGestorPage && !this.isAuthenticated()) {
-        window.location.replace('https://windedwriter.github.io/gestor-de-tareas/login.html');
-    }
-}
+    checkAuth() {
+        const isLoginPage = window.location.pathname.includes('login.html');
+        const isGestorPage = window.location.pathname.includes('gestor_tareas.html');
+        
+        if (isLoginPage && this.isAuthenticated()) {
+            window.location.href = 'gestor_tareas.html';
+        } else if (isGestorPage && !this.isAuthenticated()) {
+            window.location.href = 'login.html';
+        }
+    },
 
-// Verificación única al cargar
-document.addEventListener('DOMContentLoaded', () => {
-    // Usamos setTimeout para asegurarnos de que la verificación ocurra después de cualquier otra inicialización
-    setTimeout(() => AUTH.checkAuth(), 0);
-});
+    /**
+     * Maneja errores de autenticación
+     */
+    handleAuthError(error) {
+        console.error('Error de autenticación:', error);
+        this.logout();
+    },
+
+    /**
+     * Obtiene los datos del usuario actual
+     */
+    async getCurrentUser() {
+        try {
+            const userId = sessionStorage.getItem('userId');
+            if (!userId) return null;
+
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'getUserData',
+                    userId
+                })
+            });
+
+            const data = await response.json();
+            return data.success ? data.user : null;
+        } catch (error) {
+            console.error('Error obteniendo usuario:', error);
+            return null;
+        }
+    }
+};
+
+export default AUTH;
