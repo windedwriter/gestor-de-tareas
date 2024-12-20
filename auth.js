@@ -15,7 +15,7 @@ export const AUTH = {
      */
     async login(email, password) {
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +76,7 @@ export const AUTH = {
             const userId = sessionStorage.getItem('userId');
             if (!userId) return null;
 
-            const response = await fetch(API_URL, {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
