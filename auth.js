@@ -7,8 +7,19 @@ export const AUTH = {
 
     logout() {
         sessionStorage.clear();
-        window.location.href = CONFIG.BASE_URL + CONFIG.ROUTES.LOGIN;
+        window.location.href = CONFIG.ROUTES.LOGIN;
     },
+
+    checkAuth() {
+        const isLoginPage = window.location.pathname.includes('index.html');
+        const isGestorPage = window.location.pathname.includes('gestor_tareas.html');
+        
+        if (isLoginPage && this.isAuthenticated()) {
+            window.location.href = CONFIG.ROUTES.GESTOR;
+        } else if (isGestorPage && !this.isAuthenticated()) {
+            window.location.href = CONFIG.ROUTES.LOGIN;
+        }
+    }
 
     /**
      * Realiza el proceso de login
