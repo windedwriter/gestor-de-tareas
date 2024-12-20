@@ -1,20 +1,13 @@
-// Configuración
-const API_URL = 'https://tu-dominio-infinityfree.com/auth.php';
+import { CONFIG } from './config.js';
 
-const AUTH = {
-    /**
-     * Verifica si el usuario está autenticado
-     */
+export const AUTH = {
     isAuthenticated() {
         return sessionStorage.getItem('userId') !== null;
     },
 
-    /**
-     * Cierra la sesión del usuario
-     */
     logout() {
         sessionStorage.clear();
-        window.location.href = 'login.html';
+        window.location.href = CONFIG.BASE_URL + CONFIG.ROUTES.LOGIN;
     },
 
     /**
