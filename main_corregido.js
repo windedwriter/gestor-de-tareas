@@ -1,5 +1,6 @@
 let calendar;
 let currentUser = null;
+const API_URL = 'https://sql311.infinityfree.com/auth.php';
 
 // Verificar autenticación al cargar la página
 document.addEventListener('DOMContentLoaded', async () => {
@@ -160,7 +161,7 @@ async function actualizarCalendario() {
 // Funciones de Gestión de Tareas
 async function cargarTareas() {
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -215,7 +216,7 @@ async function agregarTarea() {
     }
 
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -327,7 +328,7 @@ function getBadgeClass(prioridad) {
 
 async function marcarComoCompletada(tareaId) {
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -450,7 +451,7 @@ function buscarTareas() {
 
 async function mostrarHistorialConPaginacion(pagina = 1, filtro = 'todas') {
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -540,7 +541,7 @@ function crearPaginacion(paginaActual, totalPaginas, filtro) {
 
 async function mostrarEstadisticas() {
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -636,7 +637,7 @@ async function limpiarTareas() {
         });
 
         if (result.isConfirmed) {
-            const response = await fetch('auth.php', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -685,7 +686,7 @@ const AUTH = {
      */
     async login(email, password) {
         try {
-            const response = await fetch('auth.php', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -753,7 +754,7 @@ async function guardarTareaEditada() {
         const priority = document.getElementById('editarPrioridadInput').value;
         const category = document.getElementById('editarCategoriaInput').value;
 
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -790,7 +791,7 @@ async function mostrarPerfilUsuario() {
     if (!currentUser) return;
 
     try {
-        const response = await fetch('auth.php', {
+        const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
