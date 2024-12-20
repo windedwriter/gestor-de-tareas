@@ -1,8 +1,8 @@
 export const CONFIG = {
-    BASE_URL: 'https://windedwriter.github.io/gestor-de-tareas',
+    BASE_URL: '/gestor-de-tareas',
     API_URL: 'https://gestortareas.freesite.online/auth.php',
     ROUTES: {
-        LOGIN: '/index.html',  // Cambiado de login.html a index.html
+        LOGIN: '/',
         GESTOR: '/gestor_tareas.html',
         INDEX: '/index.html'
     }
