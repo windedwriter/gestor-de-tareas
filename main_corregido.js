@@ -122,7 +122,7 @@ function inicializarCalendario() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: cargarTareas(),
+        events: Tareas(),
         eventClick: mostrarDetallesTarea,
         locale: 'es',
         eventDidMount: function(info) {
@@ -163,7 +163,7 @@ async function actualizarCalendario() {
 // Funciones de Gestión de Tareas
 async function cargarTareas() {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
