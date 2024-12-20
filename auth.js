@@ -12,10 +12,10 @@ const AUTH = {
     /**
      * Cierra la sesión del usuario
      */
-    logout() {
-        sessionStorage.clear();
-        window.location.replace('/login_system/login.html');
-    },
+  logout() {
+    sessionStorage.clear();
+    window.location.replace('https://windedwriter.github.io/gestor-de-tareas/login.html');
+},
 
     /**
      * Realiza el proceso de login
@@ -59,25 +59,17 @@ const AUTH = {
     /**
      * Verifica la autenticación y redirige según corresponda
      */
-    checkAuth() {
-        const isLoginPage = window.location.pathname.endsWith('login.html');
-        const isGestorPage = window.location.pathname.endsWith('gestor_tareas.html');
-        
-        if (isLoginPage && this.isAuthenticated()) {
-            window.location.replace('/login_system/gestor_tareas.html');
-        } else if (isGestorPage && !this.isAuthenticated()) {
-            window.location.replace('/login_system/login.html');
-        }
-    },
-
-    /**
-     * Maneja errores de autenticación
-     */
-    handleAuthError(error) {
-        console.error('Error de autenticación:', error);
-        this.logout();
+checkAuth() {
+    const currentPath = window.location.pathname;
+    const isLoginPage = currentPath.includes('login.html');
+    const isGestorPage = currentPath.includes('gestor_tareas.html');
+    
+    if (isLoginPage && this.isAuthenticated()) {
+        window.location.replace('https://windedwriter.github.io/gestor-de-tareas/gestor_tareas.html');
+    } else if (isGestorPage && !this.isAuthenticated()) {
+        window.location.replace('https://windedwriter.github.io/gestor-de-tareas/login.html');
     }
-};
+}
 
 // Verificación única al cargar
 document.addEventListener('DOMContentLoaded', () => {
