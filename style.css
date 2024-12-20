@@ -1,0 +1,257 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+body.dark-mode {
+    background-color: #333;
+    color: #fff;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    transition: background-color 0.3s;
+}
+
+.dark-mode .container {
+    background-color: #444;
+    border-color: #555;
+}
+
+/* Estilo para tareas vencidas */
+.task-expired {
+    background-color: #f0f0f0 !important;
+    color: #666 !important;
+    opacity: 0.8;
+}
+
+.dark-mode .task-expired {
+    background-color: #3a3a3a !important;
+    color: #999 !important;
+}
+.task-expired:hover {
+    background-color: #e8e8e8 !important;
+}
+
+.dark-mode .task-expired:hover {
+    background-color: #444 !important;
+}
+.task-expired .btn {
+    opacity: 0.8;
+}
+.card {
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.dark-mode .card {
+    background-color: #555;
+    border-color: #666;
+}
+
+.list-group-item {
+    transition: background-color 0.3s;
+    animation: fadeIn 0.3s ease-in;
+}
+
+.dark-mode .list-group-item {
+    background-color: #555;
+    border-color: #666;
+    color: #fff;
+}
+
+/* Historial Modal */
+.modal-content {
+    border-radius: 8px;
+}
+
+.dark-mode .modal-content {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .modal-header {
+    border-bottom-color: #555;
+}
+
+.dark-mode .modal-footer {
+    border-top-color: #555;
+}
+
+/* Botones de filtro en el historial */
+.btn-group .btn-outline-primary {
+    margin-right: 5px;
+}
+
+.dark-mode .btn-outline-primary {
+    color: #fff;
+    border-color: #fff;
+}
+
+.dark-mode .btn-outline-primary:hover {
+    background-color: #555;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+
+.list-group-item {
+    animation: fadeIn 0.3s ease-in;
+}
+
+/* Estilos para el calendario */
+#calendar {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.dark-mode #calendar {
+    background-color: #444;
+    color: #fff;
+}
+
+/* Estilos para las alertas de SweetAlert2 */
+.dark-mode .swal2-popup {
+    background-color: #444;
+    color: #fff;
+}
+
+.dark-mode .swal2-title,
+.dark-mode .swal2-content {
+    color: #fff;
+}
+
+.dark-mode .swal2-actions button {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Estilos para los filtros */
+#filters {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.dark-mode #filters {
+    background-color: #555;
+}
+
+/* Estilos para el historial de tareas completadas */
+#historialTareasCompletadas .list-group-item {
+    background-color: #f8f9fa;
+}
+
+.dark-mode #historialTareasCompletadas .list-group-item {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Estilos para hover en elementos interactivos */
+.list-group-item:hover {
+    transform: translateX(5px);
+    transition: transform 0.2s ease;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Estilos para estados activos */
+.btn:active,
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(0,123,255,0.25);
+}
+
+/* Transiciones suaves */
+.container,
+.card,
+.list-group-item,
+.btn,
+.form-control,
+.form-select {
+    transition: all 0.3s ease;
+}
+
+/* Estilos para el scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dark-mode ::-webkit-scrollbar-track {
+    background: #333;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb {
+    background: #666;
+}
+
+.dark-mode ::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+/* Estilos para eventos vencidos en modo oscuro */
+.dark-mode .fc-event.task-expired {
+    background-color: #444 !important;
+    border-color: #555 !important;
+    color: #999 !important;
+}
+
+/* Ajustes generales del calendario en modo oscuro */
+.dark-mode .fc {
+    background-color: #333;
+    color: #fff;
+}
+
+.dark-mode .fc th,
+.dark-mode .fc td {
+    border-color: #444;
+}
+.user-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+    margin-bottom: 20px;
+}
+
+.dark-mode .user-header {
+    background-color: #444;
+    border-bottom-color: #555;
+}
+
+#welcomeMessage {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.dark-mode #welcomeMessage {
+    color: #fff !important;
+}
