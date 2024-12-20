@@ -1,9 +1,7 @@
-import { CONFIG } from './config.js';
-import { AUTH } from './auth.js';
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar si ya hay sesión activa
     if (sessionStorage.getItem('userId')) {
-        window.location.href = CONFIG.BASE_URL + CONFIG.ROUTES.GESTOR;
+        window.location.href = 'gestor_tareas.html';
         return;
     }
 
@@ -12,77 +10,83 @@ document.addEventListener('DOMContentLoaded', () => {
     const container = document.querySelector(".container");
 
     // Evento para el formulario de inicio de sesión
-    signInForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
+  signInForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-        const email = signInForm.querySelector('input[name="email"]').value.trim();
-        const password = signInForm.querySelector('input[name="password"]').value.trim();
+    const email = signInForm.querySelector('input[name="email"]').value.trim();
+    const password = signInForm.querySelector('input[name="password"]').value.trim();
 
-        if (!email || !password) {
-            await Swal.fire({
-                icon: 'warning',
-                title: 'Campos incompletos',
-                text: 'Por favor, completa todos los campos.'
-            });
-            return;
-        }
+    if (!email || !password) {
+        await Swal.fire({
+            icon: 'warning',
+            title: 'Campos incompletos',
+            text: 'Por favor, completa todos los campos.'
+        });
+        return;
+    }
 
-        try {
-            const loadingAlert = Swal.fire({
-                title: 'Iniciando sesión',
-                text: 'Por favor espere...',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                showConfirmButton: false,
-                willOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            const response = await fetch(CONFIG.API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    action: 'login',
-                    email,
-                    password
-                })
-            });
-
-            const data = await response.json();
-
-            if (data.success) {
-                sessionStorage.setItem('userId', data.user.id);
-                await loadingAlert;
-                
-                await Swal.fire({
-                    icon: 'success',
-                    title: '¡Bienvenido!',
-                    text: 'Inicio de sesión exitoso',
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-
-                window.location.href = CONFIG.BASE_URL + CONFIG.ROUTES.GESTOR;
-            } else {
-                await Swal.fire({
-                    icon: 'error',
-                    title: 'Error',
-                    text: data.message || 'Credenciales incorrectas'
-                });
-                signInForm.querySelector('input[name="password"]').value = '';
+    try {
+        // Mostrar mensaje de carga
+        const loadingAlert = Swal.fire({
+            title: 'Iniciando sesión',
+            text: 'Por favor espere...',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            showConfirmButton: false,
+            willOpen: () => {
+                Swal.showLoading();
             }
-        } catch (error) {
-            console.error('Error:', error);
+        });
+
+        const response = await fetch(API_URL), {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                action: 'login',
+                email,
+                password
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+            sessionStorage.setItem('userId', data.user.id);
+            
+            // Cerrar el mensaje de carga
+            await loadingAlert;
+            
+            await Swal.fire({
+                icon: 'success',
+                title: '¡Bienvenido!',
+                text: 'Inicio de sesión exitoso',
+                timer: 1500,
+                showConfirmButton: false
+            });
+
+            // Redirigir después del mensaje de éxito
+            setTimeout(() => {
+                window.location.href = 'https://windedwriter.github.io/gestor-de-tareas/gestor_tareas.html';
+            }, 1500);
+        } else {
             await Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: 'Hubo un problema al iniciar sesión.'
+                text: data.message || 'Credenciales incorrectas'
             });
+            signInForm.querySelector('input[name="password"]').value = '';
         }
-    });
+    } catch (error) {
+        console.error('Error:', error);
+        await Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al iniciar sesión.'
+        });
+    }
+});
     // Evento para el formulario de registro
     signUpForm.addEventListener('submit', async (e) => {
         e.preventDefault();
