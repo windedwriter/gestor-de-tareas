@@ -1,7 +1,5 @@
 <?php
 // Configuración de cabeceras para CORS y JSON
-header('Access-Control-Allow-Origin: *'); // Durante desarrollo
-header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Origin: https://windedwriter.github.io');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
