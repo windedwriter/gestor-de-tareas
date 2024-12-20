@@ -1,91 +1,46 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Verificar si ya hay sesión activa
-    if (sessionStorage.getItem('userId')) {
-        window.location.href = 'gestor_tareas.html';
-        return;
-    }
-
     const signInForm = document.querySelector('.sign-in-form');
-    const signUpForm = document.querySelector('.sign-up-form');
-    const container = document.querySelector(".container");
+    
+    signInForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    // Evento para el formulario de inicio de sesión
-  signInForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
+        const email = signInForm.querySelector('input[name="email"]').value.trim();
+        const password = signInForm.querySelector('input[name="password"]').value.trim();
 
-    const email = signInForm.querySelector('input[name="email"]').value.trim();
-    const password = signInForm.querySelector('input[name="password"]').value.trim();
-
-    if (!email || !password) {
-        await Swal.fire({
-            icon: 'warning',
-            title: 'Campos incompletos',
-            text: 'Por favor, completa todos los campos.'
-        });
-        return;
-    }
-
-    try {
-        // Mostrar mensaje de carga
-        const loadingAlert = Swal.fire({
-            title: 'Iniciando sesión',
-            text: 'Por favor espere...',
-            allowOutsideClick: false,
-            allowEscapeKey: false,
-            showConfirmButton: false,
-            willOpen: () => {
-                Swal.showLoading();
-            }
-        });
-
-        const response = await fetch(CONFIG.API_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                action: 'login',
-                email,
-                password
-            })
-        });
-
-        const data = await response.json();
-
-        if (data.success) {
-            sessionStorage.setItem('userId', data.user.id);
-            
-            // Cerrar el mensaje de carga
-            await loadingAlert;
-            
-            await Swal.fire({
-                icon: 'success',
-                title: '¡Bienvenido!',
-                text: 'Inicio de sesión exitoso',
-                timer: 1500,
-                showConfirmButton: false
+        try {
+            const response = await fetch('https://gestortareas.freesite.online/auth.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    action: 'login',
+                    email: email,
+                    password: password
+                })
             });
 
-            // Redirigir después del mensaje de éxito
-            setTimeout(() => {
-                window.location.href = 'https://windedwriter.github.io/gestor-de-tareas/gestor_tareas.html';
-            }, 1500);
-        } else {
+            const data = await response.json();
+            
+            if (data.success) {
+                sessionStorage.setItem('userId', data.user.id);
+                window.location.href = 'gestor_tareas.html';  // Redirigir al gestor
+            } else {
+                await Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: data.message || 'Credenciales incorrectas'
+                });
+            }
+        } catch (error) {
+            console.error('Error:', error);
             await Swal.fire({
                 icon: 'error',
                 title: 'Error',
-                text: data.message || 'Credenciales incorrectas'
+                text: 'Error al conectar con el servidor'
             });
-            signInForm.querySelector('input[name="password"]').value = '';
         }
-    } catch (error) {
-        console.error('Error:', error);
-        await Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: 'Hubo un problema al iniciar sesión.'
-        });
-    }
+    });
 });
     // Evento para el formulario de registro
     signUpForm.addEventListener('submit', async (e) => {
