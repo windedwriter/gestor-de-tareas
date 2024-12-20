@@ -1,8 +1,10 @@
+import { CONFIG } from './config.js';
+import { AUTH } from './auth.js';
+
 let calendar;
 let currentUser = null;
-const API_URL = 'https://sql311.infinityfree.com/auth.php';
 
-// Verificar autenticación al cargar la página
+// Código principal de la aplicación
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         if (!AUTH.isAuthenticated()) {
