@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
 
-        const response = await fetch('https://tu-dominio-infinityfree.com/auth.php', {
+        const response = await fetch(API_URL), {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('auth.php', {
+            const response = await fetch(API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
