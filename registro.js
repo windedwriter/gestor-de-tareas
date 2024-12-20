@@ -1,3 +1,5 @@
+import { CONFIG } from './config.js';
+
 document.addEventListener('DOMContentLoaded', () => {
     const registerForm = document.querySelector('.register-form');
 
@@ -12,8 +14,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function validatePassword(password) {
-        // Al menos 6 caracteres
         return password.length >= 6;
+    }
+
+    function redirectToLogin() {
+        window.location.href = CONFIG.BASE_URL + CONFIG.ROUTES.LOGIN;
     }
 
     registerForm.addEventListener('submit', async (e) => {
@@ -71,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            const response = await fetch('auth.php', {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -92,8 +97,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     title: '¡Registro exitoso!',
                     text: data.message || '¡Tu cuenta ha sido creada correctamente!'
                 });
-                // Redirigir al login
-                window.location.href = 'login.html';
+                redirectToLogin();
             } else {
                 await Swal.fire({
                     icon: 'error',
@@ -129,7 +133,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (backToLoginBtn) {
         backToLoginBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = 'login.html';
+            redirectToLogin();
         });
     }
 
