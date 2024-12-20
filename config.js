@@ -2,8 +2,8 @@ export const CONFIG = {
     BASE_URL: '/gestor-de-tareas',
     API_URL: 'https://gestortareas.freesite.online/auth.php',
     ROUTES: {
-        LOGIN: '/',
-        GESTOR: '/gestor_tareas.html',
-        INDEX: '/index.html'
+        LOGIN: '/gestor-de-tareas/index.html',
+        GESTOR: '/gestor-de-tareas/gestor_tareas.html',
+        REGISTRO: '/gestor-de-tareas/registro.html'
     }
 };
