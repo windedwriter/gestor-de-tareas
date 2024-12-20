@@ -1,5 +1,5 @@
 import { CONFIG } from './config.js';
-
+import { AUTH } from './auth.js';
 document.addEventListener('DOMContentLoaded', () => {
     // Verificar si ya hay sesión activa
     if (sessionStorage.getItem('userId')) {
