@@ -1,9 +1,9 @@
 export const CONFIG = {
-    BASE_URL: '/gestor-de-tareas',
+    BASE_URL: 'https://windedwriter.github.io/gestor-de-tareas',
     API_URL: 'https://gestortareas.freesite.online/auth.php',
     ROUTES: {
-        LOGIN: '/gestor-de-tareas/index.html',
-        GESTOR: '/gestor-de-tareas/gestor_tareas.html',
-        REGISTRO: '/gestor-de-tareas/registro.html'
+        LOGIN: 'https://windedwriter.github.io/gestor-de-tareas/index.html',
+        GESTOR: 'https://windedwriter.github.io/gestor-de-tareas/gestor_tareas.html',
+        REGISTRO: 'https://windedwriter.github.io/gestor-de-tareas/registro.html'
     }
 };
