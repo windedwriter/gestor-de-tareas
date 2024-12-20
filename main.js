@@ -4,16 +4,15 @@ import { AUTH } from './auth.js';
 let calendar;
 let currentUser = null;
 
-// Código principal de la aplicación
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         if (!AUTH.isAuthenticated()) {
-            AUTH.redirectToindex();
+            AUTH.redirectToIndex();
             return;
         }
 
         // Cargar datos del usuario
-        const response = await fetch('auth.php', {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,8 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         currentUser = data.user;
         mostrarMensajeBienvenida();
-
-        // Inicializar funcionalidades
         await initializeApp();
 
     } catch (error) {
@@ -53,7 +50,7 @@ async function initializeApp() {
         mostrarErrorInicializacion();
     }
 }
-
+export function setupEventListeners() {
 // Configuración de event listeners
 function setupEventListeners() {
     // Botones principales
@@ -76,6 +73,7 @@ function setupEventListeners() {
 
     // Botón de cerrar sesión
     document.getElementById('cerrarSesionBtn')?.addEventListener('click', confirmarCerrarSesion);
+}
 }
 
 // Función para mostrar error de inicialización
@@ -218,7 +216,7 @@ async function agregarTarea() {
     }
 
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -330,7 +328,7 @@ function getBadgeClass(prioridad) {
 
 async function marcarComoCompletada(tareaId) {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -453,7 +451,7 @@ function buscarTareas() {
 
 async function mostrarHistorialConPaginacion(pagina = 1, filtro = 'todas') {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -543,7 +541,7 @@ function crearPaginacion(paginaActual, totalPaginas, filtro) {
 
 async function mostrarEstadisticas() {
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -639,7 +637,7 @@ async function limpiarTareas() {
         });
 
         if (result.isConfirmed) {
-            const response = await fetch(API_URL, {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -688,7 +686,7 @@ const AUTH = {
      */
     async login(email, password) {
         try {
-            const response = await fetch(API_URL, {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -756,7 +754,7 @@ async function guardarTareaEditada() {
         const priority = document.getElementById('editarPrioridadInput').value;
         const category = document.getElementById('editarCategoriaInput').value;
 
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -793,7 +791,7 @@ async function mostrarPerfilUsuario() {
     if (!currentUser) return;
 
     try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(CONFIG.API_URL, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -833,3 +831,11 @@ async function mostrarPerfilUsuario() {
         });
     }
 }
+export {
+    cargarTareas,
+    agregarTarea,
+    marcarComoCompletada,
+    actualizarListaTareas,
+    mostrarDetallesTarea
+};
+
