@@ -6,7 +6,7 @@ const API_URL = 'https://sql311.infinityfree.com/auth.php';
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         if (!AUTH.isAuthenticated()) {
-            AUTH.redirectToLogin();
+            AUTH.redirectToindex();
             return;
         }
 
