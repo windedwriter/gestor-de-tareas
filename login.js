@@ -1,3 +1,4 @@
+import { CONFIG } from './config.js';
 document.addEventListener('DOMContentLoaded', () => {
     const signInForm = document.querySelector('.sign-in-form');
     
@@ -151,5 +152,4 @@ document.addEventListener('DOMContentLoaded', () => {
             switchToSignIn();
         });
     }
-    import { CONFIG } from './config.js';
 });
