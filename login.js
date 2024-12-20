@@ -196,4 +196,5 @@ document.addEventListener('DOMContentLoaded', () => {
             switchToSignIn();
         });
     }
+    import { CONFIG } from './config.js';
 });
