@@ -1,4 +1,3 @@
-import { CONFIG } from './config.js';
 document.addEventListener('DOMContentLoaded', () => {
     const signInForm = document.querySelector('.sign-in-form');
     
@@ -9,7 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const password = signInForm.querySelector('input[name="password"]').value.trim();
 
         try {
-            const response = await fetch('https://gestortareas.freesite.online/auth.php', {
+            const response = await fetch(CONFIG.API_URL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             if (data.success) {
                 sessionStorage.setItem('userId', data.user.id);
-                window.location.href = 'gestor_tareas.html';  // Redirigir al gestor
+                window.location.href = '/gestor-de-tareas/gestor_tareas.html';
             } else {
                 await Swal.fire({
                     icon: 'error',
