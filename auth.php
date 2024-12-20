@@ -1,6 +1,6 @@
 <?php
 // Configuración de cabeceras para CORS y JSON
-header('Access-Control-Allow-Origin: *');
+header('Access-Control-Allow-Origin: https://windedwriter.github.io');
 header('Content-Type: application/json');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
@@ -11,11 +11,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
-// Configuración de la base de datos
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'login_system');
+// Configuración de la base de datos para InfinityFree
+define('DB_HOST', 'sql311.infinityfree.com');
+define('DB_USER', 'if0_37944823');
+define('DB_PASS', 'LHjPUvjUj2nA');
+define('DB_NAME', 'if0_37944823_local_sistem');
 
 // Función para conectar a la base de datos
 function connectDB() {
