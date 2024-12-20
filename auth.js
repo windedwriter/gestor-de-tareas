@@ -10,20 +10,6 @@ export const AUTH = {
         window.location.href = CONFIG.ROUTES.LOGIN;
     },
 
-    checkAuth() {
-        const isLoginPage = window.location.pathname.includes('index.html');
-        const isGestorPage = window.location.pathname.includes('gestor_tareas.html');
-        
-        if (isLoginPage && this.isAuthenticated()) {
-            window.location.href = CONFIG.ROUTES.GESTOR;
-        } else if (isGestorPage && !this.isAuthenticated()) {
-            window.location.href = CONFIG.ROUTES.LOGIN;
-        }
-    }
-
-    /**
-     * Realiza el proceso de login
-     */
     async login(email, password) {
         try {
             const response = await fetch(CONFIG.API_URL, {
@@ -42,12 +28,11 @@ export const AUTH = {
             if (data.success) {
                 sessionStorage.setItem('userId', data.user.id);
                 return { success: true, message: 'Login exitoso' };
-            } else {
-                return {
-                    success: false,
-                    message: data.message || 'Credenciales incorrectas'
-                };
             }
+            return {
+                success: false,
+                message: data.message || 'Credenciales incorrectas'
+            };
         } catch (error) {
             console.error('Error en login:', error);
             return {
@@ -57,31 +42,23 @@ export const AUTH = {
         }
     },
 
-    /**
-     * Verifica la autenticación y redirige según corresponda
-     */
     checkAuth() {
-        const isLoginPage = window.location.pathname.includes('login.html');
-        const isGestorPage = window.location.pathname.includes('gestor_tareas.html');
+        const currentPath = window.location.pathname;
+        const isLoginPage = currentPath.endsWith('index.html') || currentPath.endsWith('/gestor-de-tareas/');
+        const isGestorPage = currentPath.includes('gestor_tareas.html');
         
         if (isLoginPage && this.isAuthenticated()) {
-            window.location.href = 'gestor_tareas.html';
+            window.location.href = CONFIG.ROUTES.GESTOR;
         } else if (isGestorPage && !this.isAuthenticated()) {
-            window.location.href = 'login.html';
+            window.location.href = CONFIG.ROUTES.LOGIN;
         }
     },
 
-    /**
-     * Maneja errores de autenticación
-     */
     handleAuthError(error) {
         console.error('Error de autenticación:', error);
         this.logout();
     },
 
-    /**
-     * Obtiene los datos del usuario actual
-     */
     async getCurrentUser() {
         try {
             const userId = sessionStorage.getItem('userId');
