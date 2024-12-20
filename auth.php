@@ -1,12 +1,10 @@
 <?php
 // Configuración de cabeceras para CORS y JSON
 header('Access-Control-Allow-Origin: https://windedwriter.github.io');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
 header('Access-Control-Allow-Credentials: true');
 header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Requested-With');
 
 // Manejo preflight CORS
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -14,6 +12,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     exit;
 }
 
+// Verificar método POST
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    http_response_code(405);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Método no permitido'
+    ]);
+    exit;
+}
+
+// Leer y validar datos JSON
+$raw_data = file_get_contents("php://input");
+$data = json_decode($raw_data);
+
+if (!$raw_data || json_last_error() !== JSON_ERROR_NONE) {
+    http_response_code(400);
+    echo json_encode([
+        'success' => false,
+        'message' => 'Datos JSON inválidos'
+    ]);
+    exit;
+}
 // Configuración de la base de datos para InfinityFree
 define('DB_HOST', 'sql311.infinityfree.com');
 define('DB_USER', 'if0_37944823');
