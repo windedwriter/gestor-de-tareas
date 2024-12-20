@@ -50,7 +50,7 @@ async function initializeApp() {
         mostrarErrorInicializacion();
     }
 }
-export function setupEventListeners() {
+
 // Configuración de event listeners
 function setupEventListeners() {
     // Botones principales
@@ -74,42 +74,7 @@ function setupEventListeners() {
     // Botón de cerrar sesión
     document.getElementById('cerrarSesionBtn')?.addEventListener('click', confirmarCerrarSesion);
 }
-}
 
-// Función para mostrar error de inicialización
-function mostrarErrorInicializacion() {
-    Swal.fire({
-        title: 'Error',
-        text: 'No se pudo inicializar la aplicación. Por favor, intenta de nuevo más tarde.',
-        icon: 'error'
-    }).then(() => {
-        AUTH.logout();
-    });
-}
-
-// Función para confirmar cierre de sesión
-function confirmarCerrarSesion() {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: "¿Deseas cerrar sesión?",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Sí, cerrar sesión',
-        cancelButtonText: 'Cancelar'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            AUTH.logout();
-        }
-    });
-}
-function mostrarMensajeBienvenida() {
-    const welcomeMessage = document.getElementById('welcomeMessage');
-    if (currentUser && welcomeMessage) {
-        welcomeMessage.textContent = `¡Bienvenido, ${currentUser.username}!`;
-    }
-}
 // Funciones del Calendario
 function inicializarCalendario() {
     const calendarEl = document.getElementById('calendar');
@@ -120,7 +85,7 @@ function inicializarCalendario() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
-        events: Tareas(),
+        events: cargarTareas, // Cambiado aquí
         eventClick: mostrarDetallesTarea,
         locale: 'es',
         eventDidMount: function(info) {
@@ -138,7 +103,6 @@ function inicializarCalendario() {
     });
     calendar.render();
 }
-
 async function actualizarCalendario() {
     if (!calendar) return;
     calendar.removeAllEvents();
